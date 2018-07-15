@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Image, StatusBar, ToastAndroid } from "react-native";
-import { Container, Content, Form, Item, Label, Input, Icon, Text, Button, Footer } from "native-base";
+import { NavigationActions, StackActions } from "react-navigation";
+import { Container, Content, Form, Item, Label, Input, Icon, Text, Button } from "native-base";
 
 export class Login extends Component {
 	constructor(props){
@@ -16,9 +17,12 @@ export class Login extends Component {
 	}
 
 	login = () => {
-		if(this.state.username === this.state.login.username && this.state.login.password){
-			ToastAndroid.show('You are logged in!', ToastAndroid.SHORT);
-			this.props.navigation.navigate('Home')
+		if(this.state.username === this.state.login.username && this.state.password === this.state.login.password){
+			ToastAndroid.show('You are logged in!', ToastAndroid.SHORT)
+			this.props.navigation.dispatch(StackActions.reset({
+				index:0,
+				actions:[ NavigationActions.navigate({routeName: 'Home'}) ]
+			}))
 		}
 	}
 
@@ -32,10 +36,10 @@ export class Login extends Component {
         <Content ref={c => this._content = c} padder>
 				<Image 
 					source={require('../images/logo.png')}
-					style={{ flex:1, marginTop:80 }}
-					height={200}
+					style={{ flex:1, marginTop:80, marginBottom:20 }}
+					height={150}
 					width={null}
-					resizeMode='cover'
+					resizeMode='contain'
         />
         <Text style={{ textAlign:'center', fontSize:24, marginBottom:100 }}>Sanitary Checklist System</Text>
           <Form>

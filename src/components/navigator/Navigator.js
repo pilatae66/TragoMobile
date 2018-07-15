@@ -8,6 +8,7 @@ import Login from "../screens/Login"
 import Register from "../screens/Register"
 import CheckList from "../screens/CheckList"
 import { Remarks } from '../screens/Remarks'
+import { ShowCompany } from "../screens/ShowCompany";
 
 // DrawerNavigator screens
 import Home from '../screens/Home'
@@ -31,6 +32,9 @@ export const Stack = createStackNavigator({
     },
     Remarks:{
         screen: Remarks
+    },
+    ShowCompany: {
+        screen: ShowCompany
     },
     Home: {
         screen: createDrawerNavigator({

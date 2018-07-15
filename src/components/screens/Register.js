@@ -1,24 +1,27 @@
 import React, { Component } from 'react'
 import { Container, Content, Header, Left, Body, Title, Text, Form, Icon, Item, Label, Input, Button } from "native-base";
-
+import { insertNewCompany } from "../../database/database";
 export class Register extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
 			companyName:'',
-			address:'',
-			ownerName:'',
-			contactNumber:'',
+			companyAddress:'',
+			companyOwner:'',
+			ownerContactNumber:'',
 			data:{
 				companyName:'',
-				address:'',
-				ownerName:'',
-				contactNumber:''
+				companyAddress:'',
+				companyOwner:'',
+				ownerContactNumber:'',
+				id: 4
 			}
 		}
 	}
 
 	register = () => {
+		console.log(this.state.data)
+		insertNewCompany(this.state.data).then().catch((error) => console.log(error))
 		this.props.navigation.navigate('CheckList')
 	}
 
@@ -40,28 +43,28 @@ export class Register extends Component {
 						<Item floatingLabel>
 							<Label>Company Name</Label>
 							<Input
-								onChangeText={(text) => {this.setState({companyName:text})} }
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {companyName:text})})} }
 								/>
 							<Icon style={{ color:'gray' }} active name='ios-medal-outline' />
 						</Item>
 						<Item floatingLabel>
 							<Label>Address</Label>
 							<Input 
-								onChangeText={(text) => {this.setState({address:text})} }
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {companyAddress:text})})} }
 								/>
 							<Icon style={{ color:'gray' }} active name='ios-home-outline' />
 						</Item>
 						<Item floatingLabel>
 							<Label>Owner Name</Label>
 							<Input 
-								onChangeText={(text) => {this.setState({ownerName:text})} }
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {companyOwner:text})})} }
 								/>
 							<Icon style={{ color:'gray' }} active name='ios-contact-outline' />
 						</Item>
 						<Item floatingLabel>
 							<Label>Contact Number</Label>
 							<Input 
-								onChangeText={(text) => {this.setState({contactNumber:text})} }
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {ownerContactNumber:text})})} }
 								/>
 							<Icon style={{ color:'gray' }} active name='ios-phone-portrait-outline' />
 						</Item>

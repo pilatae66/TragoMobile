@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { ToastAndroid } from "react-native";
 import { Container, Content, Form, Text, Label, Input, Button, Header, Title, Left, Icon, Body, Item } from "native-base";
+import { NavigationActions, StackActions } from "react-navigation";
 
 export class Remarks extends Component {
 
     handleSubmit = () => {
-        this.props.navigation.navigate('Home')
+        this.props.navigation.dispatch(StackActions.reset({
+            index:0,
+            actions:[ NavigationActions.navigate({routeName: 'Home'})]
+        }))
         ToastAndroid.show('Checklist Submitted!', ToastAndroid.SHORT)
     }
 
