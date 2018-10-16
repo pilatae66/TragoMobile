@@ -2,15 +2,25 @@ import React, { Component } from 'react'
 import { ToastAndroid } from "react-native";
 import { Container, Content, Form, Text, Label, Input, Button, Header, Title, Left, Icon, Body, Item } from "native-base";
 import { NavigationActions, StackActions } from "react-navigation";
+import { connect } from 'react-redux';
+import { insertRemarks, addCheckList } from '../../action';
 
-export class Remarks extends Component {
+class Remarks extends Component {
+
+    constructor(props){
+        super(props)
+        this.state = {
+            remarks: ''
+        }
+    }
 
     handleSubmit = () => {
+        this.props.insertRemarks(this.state.remarks)
+        this.props.addCheckList()
         this.props.navigation.dispatch(StackActions.reset({
             index:0,
             actions:[ NavigationActions.navigate({routeName: 'Home'})]
         }))
-        ToastAndroid.show('Checklist Submitted!', ToastAndroid.SHORT)
     }
 
     render() {
@@ -30,7 +40,7 @@ export class Remarks extends Component {
                     <Form>
                     <Item stackedLabel>
                         <Label>Please enter remarks</Label>
-                        <Input multiline={true} />
+                        <Input multiline={true} onChangeText={text => this.setState({remarks:text})}/>
                     </Item>
                     </Form>
                 </Content>
@@ -41,5 +51,10 @@ export class Remarks extends Component {
         )
     }
 }
+mapStateToProps = state => {
+    return {
+        checklist: state.checkList.checklist
+    }
+}
 
-export default Remarks
+export default connect(mapStateToProps,{insertRemarks, addCheckList})(Remarks)

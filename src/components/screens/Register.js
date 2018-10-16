@@ -1,27 +1,28 @@
 import React, { Component } from 'react'
 import { Container, Content, Header, Left, Body, Title, Text, Form, Icon, Item, Label, Input, Button } from "native-base";
-import { insertNewCompany } from "../../database/database";
-export class Register extends Component {
+import { registerCompany } from '../../action'
+import { connect } from 'react-redux'
+
+class Register extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			companyName:'',
-			companyAddress:'',
-			companyOwner:'',
-			ownerContactNumber:'',
 			data:{
 				companyName:'',
 				companyAddress:'',
 				companyOwner:'',
 				ownerContactNumber:'',
-				id: 4
+				ownerSanitaryPermitNo:'',
+				dateIssued:'',
+				numberOfPersonnel:0,
+				numberWithHealthCertificate:0
 			}
 		}
 	}
 
 	register = () => {
 		console.log(this.state.data)
-		insertNewCompany(this.state.data).then().catch((error) => console.log(error))
+		this.props.registerCompany(this.state.data)
 		this.props.navigation.navigate('CheckList')
 	}
 
@@ -68,6 +69,37 @@ export class Register extends Component {
 								/>
 							<Icon style={{ color:'gray' }} active name='ios-phone-portrait-outline' />
 						</Item>
+						<Item floatingLabel>
+							<Label>Sanitary Permit No.</Label>
+							<Input 
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {ownerSanitaryPermitNo:text})})} }
+								/>
+							<Icon style={{ color:'gray' }} active name='ios-phone-portrait-outline' />
+						</Item>
+						<Item floatingLabel>
+							<Label>Date Issued</Label>
+							<Input 
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {dateIssued:text})})} }
+								/>
+							<Icon style={{ color:'gray' }} active name='ios-phone-portrait-outline' />
+						</Item>
+						<Item floatingLabel>
+							<Label>No. of Personnel</Label>
+							<Input
+							keyboardType = 'numeric'
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {numberOfPersonnel:parseInt(text)})})} }
+								/>
+							<Icon style={{ color:'gray' }} active name='ios-phone-portrait-outline' />
+						</Item>
+						<Item floatingLabel>
+							<Label>No. with Health Certificate</Label>
+							<Input 
+							
+							keyboardType = 'numeric'
+								onChangeText={(text) => {this.setState({data: _.extend(this.state.data, {numberWithHealthCertificate:parseInt(text)})})} }
+								/>
+							<Icon style={{ color:'gray' }} active name='ios-phone-portrait-outline' />
+						</Item>
 					</Form>
 				</Content>						
 				<Button block onPress={this.register}>
@@ -78,5 +110,10 @@ export class Register extends Component {
 		)
 	}
 }
+mapStateToProps = state => {
+	return {
+		checklist: state.checkList.checklist
+	}
+}
 
-export default Register
+export default connect(mapStateToProps, {registerCompany})(Register)

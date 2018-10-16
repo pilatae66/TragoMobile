@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "660990881118",
+    "firebase_url": "https://sanitary-691f5.firebaseio.com",
+    "project_id": "sanitary-691f5",
+    "storage_bucket": "sanitary-691f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660990881118:android:9c05a433391457a1",
+        "android_client_info": {
+          "package_name": "com.sanitarysystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "660990881118-it6ojaoh12g3e1imjabr3b7aq8q6471i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAixN4nBcB3BhFK97SiDW8hDfxDuomA_f4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

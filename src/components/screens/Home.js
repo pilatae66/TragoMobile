@@ -2,30 +2,25 @@ import React, { Component } from 'react'
 import { Image } from "react-native";
 import { Fab, Container, Content, Header, Text, Left, Right, Body, Icon, Button, Title, Thumbnail, Card, CardItem } from "native-base";
 
-import { selectAllCompany } from "../../database/database";
+import { getCheckList } from '../../action'
+import { connect } from "react-redux"
 
-export default class Home extends Component {
+class Home extends Component {
   
   constructor(props){
     super(props)
     this.state = {
-      active: false,
-      data:[]
+      active: false
     }
   }
   
   componentDidMount(){
-    selectAllCompany().then((allCompany) => {
-      this.setState({data:allCompany})
-      console.log('success!')
-    }).catch((error) => {
-      this.setState({data:[]})
-      console.log('error')
-    })
+    this.props.getCheckList
   }
   
   render() {
-    let company = this.state.data.map((company, index) => {
+    console.log(this.props)
+    let company = this.props.checklist.map((company, index) => {
       return (
         <Card key={index}>
         <CardItem>
@@ -42,7 +37,7 @@ export default class Home extends Component {
         </CardItem>
         <CardItem>
           <Left>
-            <Button transparent onPress={() => { this.props.navigation.navigate('ShowCompany', {data:this.state.data[index]}) }}>
+            <Button transparent onPress={() => { this.props.navigation.navigate('ShowCompany', {data:this.props.checklist[index]}) }}>
               <Icon active name="eye" />
               <Text>View</Text>
             </Button>
@@ -53,7 +48,7 @@ export default class Home extends Component {
           </Button>
         </Body>
         <Right>
-        <Text>11h ago</Text>
+        <Text>{company.dateIssued.toLocaleDateString()}</Text>
         </Right>
         </CardItem>
         </Card>
@@ -91,3 +86,10 @@ export default class Home extends Component {
     )
   }
 }
+mapStateToProps = state => {
+  return {
+    checklist: state.checkList.checklist
+  }
+}
+
+export default connect(mapStateToProps, { getCheckList })(Home)

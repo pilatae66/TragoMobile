@@ -7,8 +7,8 @@ import Splash from '../screens/Splash'
 import Login from "../screens/Login"
 import Register from "../screens/Register"
 import CheckList from "../screens/CheckList"
-import { Remarks } from '../screens/Remarks'
-import { ShowCompany } from "../screens/ShowCompany";
+import Remarks from '../screens/Remarks'
+import ShowCompany from "../screens/ShowCompany";
 
 // DrawerNavigator screens
 import Home from '../screens/Home'

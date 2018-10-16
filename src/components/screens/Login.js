@@ -1,29 +1,35 @@
 import React, { Component } from 'react'
 import { Image, StatusBar, ToastAndroid } from "react-native";
 import { NavigationActions, StackActions } from "react-navigation";
-import { Container, Content, Form, Item, Label, Input, Icon, Text, Button } from "native-base";
+import { Container, Content, Form, Item, Label, Input, Icon, Text,Button } from "native-base";
+import firebase from 'react-native-firebase'
 
 export class Login extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			username: '',
+			email: '',
 			password: '',
 			login: {
-				username: 'admin',
+				email: 'admin',
 				password: 'admin'
-			}
+			},
+			loading: false
 		}
 	}
 
 	login = () => {
-		if(this.state.username === this.state.login.username && this.state.password === this.state.login.password){
+		const { email, password } = this.state
+		this.setState({loading:!this.state.loading})
+		firebase.auth().signInWithEmailAndPassword(email, password)
+		.then(() => {
 			ToastAndroid.show('You are logged in!', ToastAndroid.SHORT)
 			this.props.navigation.dispatch(StackActions.reset({
 				index:0,
 				actions:[ NavigationActions.navigate({routeName: 'Home'}) ]
 			}))
-		}
+		})
+		.catch(err => ToastAndroid.show(err.message, ToastAndroid.SHORT))
 	}
 
   render() {
@@ -44,23 +50,23 @@ export class Login extends Component {
         <Text style={{ textAlign:'center', fontSize:24, marginBottom:100 }}>Sanitary Checklist System</Text>
           <Form>
             <Item floatingLabel>
-              <Label>Username</Label>
+              <Label>Email</Label>
 							<Input 
-								onChangeText={(text) => {this.setState({username:text})} }
+								onChangeText={(text) => {this.setState({email:text})} }
 								/>
             <Icon style={{ color:'gray' }} active name='ios-contact-outline' />
             </Item>
             <Item floatingLabel>
               <Label>Password</Label>
 							<Input 
-							password
+								secureTextEntry={true}
 								onChangeText={(text) => {this.setState({password:text})} }
 							/>
             <Icon style={{ color:'gray' }} active name='ios-lock-outline' />
             </Item>
           </Form>
         </Content>						
-				<Button iconRight block onPress={this.login}>
+				<Button iconRight loading={this.state.loading} block onPress={this.login}>
 					<Text>Submit</Text>
           <Icon name='ios-paper-plane-outline' />
 				</Button>

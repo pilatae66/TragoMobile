@@ -4,12 +4,12 @@ import { StackActions, NavigationActions } from "react-navigation";
 import { Container, Content, Card, CardItem, Left, Right, Body, Button, Thumbnail, Icon, Text, Header, Title } from "native-base";
 import { deleteCompany } from "../../database/database";
 
-export class ShowCompany extends Component {
+class ShowCompany extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
 			company:{
-				id: 1
+				id: 0
 			}
 		}
 	}
@@ -40,6 +40,7 @@ export class ShowCompany extends Component {
           <Body>
             <Title>{company.companyName}</Title>
           </Body>
+		  <Right/>
         </Header>
 			<Content style={{ margin:5 }}>
 			<Card>
@@ -69,7 +70,7 @@ export class ShowCompany extends Component {
 			</Button>
 			</Body>
 			<Right>
-			<Text>11h ago</Text>
+			<Text>{company.dateIssued.toLocaleDateString()}</Text>
 			</Right>
 			</CardItem>
 			</Card>
